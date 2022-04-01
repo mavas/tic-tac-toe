@@ -9,38 +9,41 @@ given this, and I did it like this).
 import numpy as np
 
 
+def c(a):
+    """Determines if someone wins, or we can continue."""
+    # wins..
+    for i in (1, 2):
+        if a[0][0] == a[0][1] == a[0][2] == i:  # rows
+            return False
+        if a[1][0] == a[1][1] == a[1][2] == i:
+            return False
+        if a[2][0] == a[2][1] == a[2][2] == i:
+            return False
+
+        if a[0][0] == a[1][0] == a[2][0] == i:  # cols
+            return False
+        if a[0][1] == a[1][1] == a[2][1] == i:
+            return False
+        if a[0][2] == a[1][2] == a[2][2] == i:
+            return False
+
+        if a[0][0] == a[1][1] == a[2][2] == i:  # diags
+            return False
+        if a[0][2] == a[1][1] == a[2][0] == i:
+            return False
+    # valid board..
+    for i in range(3):
+        if a[0][i] == 0 or a[1][i] == 0 or a[2][i] == 0:
+            return True
+    for i in range(3):
+        if a[1][0] == 0 or a[i][1] == 0 or a[i][2] == 0:
+            return True
+    return False
+
+
 def tic_tac_toe_game():
     a = np.zeros((3, 3), dtype=np.int32)
-    def c(a):
-        """Determines if someone wins, or we can continue."""
-        # wins..
-        for i in (1, 2):
-            if a[0][0] == a[0][1] == a[0][2] == i:  # rows
-                return False
-            if a[1][0] == a[1][1] == a[1][2] == i:
-                return False
-            if a[2][0] == a[2][1] == a[2][2] == i:
-                return False
 
-            if a[0][0] == a[1][0] == a[2][0] == i:  # cols
-                return False
-            if a[0][1] == a[1][1] == a[2][1] == i:
-                return False
-            if a[0][2] == a[1][2] == a[2][2] == i:
-                return False
-
-            if a[0][0] == a[1][1] == a[2][2] == i:  # diags
-                return False
-            if a[0][2] == a[1][1] == a[2][0] == i:
-                return False
-        # valid board..
-        for i in range(3):
-            if a[0][i] == 0 or a[1][i] == 0 or a[2][i] == 0:
-                return True
-        for i in range(3):
-            if a[1][0] == 0 or a[i][1] == 0 or a[i][2] == 0:
-                return True
-        return False
     t = True
     while c(a):
         print a
@@ -57,6 +60,7 @@ def tic_tac_toe_game():
         else:
             a[xp][yp] = 2
         t = not t
+
     # determine winner..
     for i in (1, 2):
         if a[0][0] == a[0][1] == a[0][2] == i:  # rows
